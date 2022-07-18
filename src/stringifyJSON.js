@@ -2,18 +2,8 @@
 // var stringifyJSON = JSON.stringify;
 
 // but you don't so you're going to write it from scratch:
-
-// JSON.stringify({});                    // '{}'
-// JSON.stringify(true);                  // 'true'
-// JSON.stringify('foo');                 // '"foo"'
-// JSON.stringify([1, 'false', false]);   // '[1,"false",false]'
-// JSON.stringify([NaN, null, Infinity]); // '[null,null,null]'
-// JSON.stringify({ x: 5 });              // '{"x":5}'
-
 var stringifyJSON = function(obj) {
   // your code goes here
-  var stringifyTest = JSON.stringify(obj);
-  // console.log('Goal:', stringifyTest);
 
   if (obj === null || typeof obj === 'undefined') {
     return 'null';
@@ -28,7 +18,6 @@ var stringifyJSON = function(obj) {
   }
 
   if (typeof obj === 'object' && Object.keys(obj).length === 0) {
-    console.log('object check');
     return '{}';
   }
 
@@ -53,31 +42,16 @@ var stringifyJSON = function(obj) {
     return '['.concat(result.toString(), ']');
   }
 
-
-  /*
-
-  unstringifiableValues = [
-  {
-    'functions': function() {},
-    'undefined': undefined
-  }
-];
-
-  */
-
   // if it's an object with values
   if (typeof obj === 'object' && Object.keys(obj).length > 0 && !Array.isArray(obj)) {
     var result = [];
-    // '{"a":"apple"}'
     for (var key in obj) {
-      if (key )
-      console.log('key', key, '\tobj:', obj[key]);
+      if ((key === 'functions' && typeof obj[key] === 'function')
+        || (key === 'undefined')) {
+        continue;
+      }
       result.push(stringifyJSON(key) + ':' + stringifyJSON(obj[key]));
     }
     return '{'.concat(result.toString(), '}');
-
   }
-
-
-
 };
